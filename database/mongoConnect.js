@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 
 const connectToMongo = () => {
 
-    mongoose.connect("mongodb://localhost:27017/speakit")
+    mongoose.connect("mongodb+srv://sahilmongo:sahilemitrr@speak-emitrr.7zapeoq.mongodb.net/?retryWrites=true")
         .then(() => {
             console.log("Connected with the database");
-        }).catch(() => {
-            console.log("Connection with the database failed");
+        }).catch((e) => {
+            console.log(e.message);
         })
 }
 
