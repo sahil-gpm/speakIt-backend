@@ -6,7 +6,7 @@ const app = express()
 //adding required middlewares
 app.use(express.json())
 app.use(cors({
-    origin : "*"
+    origin : process.env.FRONTEND
 })) 
 
 //connect with the database

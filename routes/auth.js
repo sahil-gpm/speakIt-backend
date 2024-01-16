@@ -9,7 +9,6 @@ const User = require('../models/User')
 const fetchUser = require('../middleware/fetchUser')
 const { body, validationResult } = require('express-validator')
 dotenv.configDotenv()
-const key = "boostisthesecretofmyenergy"
 
 router.post("/create-new-account",body('email').isEmail().isLength({min:7,max:60}),body('password').isLength({min:3,max:20}),async (req, res) => {
 
@@ -27,7 +26,7 @@ router.post("/create-new-account",body('email').isEmail().isLength({min:7,max:60
         })
         //creating new user account
         await newuser.save()
-        return res.json({ success: true, authtoken: jwt.sign({ payload: newuser.id }, key) })
+        return res.json({ success: true, authtoken: jwt.sign({ payload: newuser.id }, process.env.KEY) })
     } catch (e) {
         return res.status(400).json({ success: false, message: e.message})
     }
@@ -51,7 +50,7 @@ router.post("/login-into-account",body('email').isEmail().isLength({min:7,max:60
         //else compare the passsowrd
         const passowordComparison = await bcrypt.compare(req.body.password, user.password)
         if (passowordComparison) {
-            return res.status(200).json({ success: true, authtoken: jwt.sign({ payload: user.id }, key) })
+            return res.status(200).json({ success: true, authtoken: jwt.sign({ payload: user.id }, process.env.KEY) })
         } else {
             return res.status(400).json({ error: "Try to login with valid credentials" })
         }
